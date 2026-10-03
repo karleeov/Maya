@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SafePlate — dinner shouldn't be a gamble</title>
+<meta name="description" content="An on-device, open-source AI meal planner that scans recipes for your friend's hidden allergens. No servers, no accounts, no data leaving the kitchen." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23fcf8ef' stroke='%23141313' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23d5593f' stroke-width='4'/%3E%3Cpath d='M32 27c-2.5-4-9-2.2-9 2 0 3.6 5 6.6 9 9.5 4-2.9 9-5.9 9-9.5 0-4.2-6.5-6-9-2z' fill='%23009146'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Vollkorn:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── Loading overlay: model download + warm-up ───────────────────── -->
+<div id="loader" role="status" aria-live="polite">
+  <div class="loader-inner">
+    <svg class="loader-plate" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+      <circle cx="32" cy="32" r="29" fill="#fcf8ef" stroke="#141313" stroke-width="3"/>
+      <circle cx="32" cy="32" r="17" fill="none" stroke="#d5593f" stroke-width="4"/>
+      <path d="M32 27c-2.5-4-9-2.2-9 2 0 3.6 5 6.6 9 9.5 4-2.9 9-5.9 9-9.5 0-4.2-6.5-6-9-2z" fill="#009146"/>
+    </svg>
+    <h1 class="loader-word">SafePlate</h1>
+    <p class="loader-sub">Warming up the open-source AI that reads ingredient lists<br/>so your friend doesn't have to squint at every one.</p>
+    <div class="load-track"><div id="loadBar"></div></div>
+    <p id="loadLabel" class="load-label">Preparing…</p>
+    <p class="load-note">Runs 100% on this device · open-weight model · no account, no API key</p>
+  </div>
+</div>
+
+<!-- ── Fixed left sidebar: who we're cooking for ───────────────────── -->
+<aside id="sidebar">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true">
+      <circle cx="32" cy="32" r="29" fill="#fcf8ef" stroke="#141313" stroke-width="3"/>
+      <circle cx="32" cy="32" r="17" fill="none" stroke="#d5593f" stroke-width="4"/>
+      <path d="M32 27c-2.5-4-9-2.2-9 2 0 3.6 5 6.6 9 9.5 4-2.9 9-5.9 9-9.5 0-4.2-6.5-6-9-2z" fill="#009146"/>
+    </svg>
+    <div>
+      <div class="brand-name">SafePlate</div>
+      <div class="brand-tag">cooked with care</div>
+    </div>
+  </div>
+
+  <section class="side-block" aria-labelledby="profileHead">
+    <h2 id="profileHead" class="side-head">Who are we cooking for?</h2>
+    <label class="field-label" for="friendName">Friend's name</label>
+    <input id="friendName" type="text" value="Maya" maxlength="24" autocomplete="off" />
+
+    <div class="field-label">Allergies &amp; intolerances</div>
+    <div id="allergenChips" class="chips" role="group" aria-label="Allergens"></div>
+
+    <div class="field-label">How careful should we be?</div>
+    <div class="severity" role="group" aria-label="Severity">
+      <button id="sevMild" class="sev-btn" type="button">Sensitive<br/><span>flag likely risks</span></button>
+      <button id="sevSevere" class="sev-btn active" type="button">Severe<br/><span>flag every trace</span></button>
+    </div>
+  </section>
+
+  <section class="side-block model-block" aria-labelledby="modelHead">
+    <h2 id="modelHead" class="side-head">Under the hood</h2>
+    <div class="model-pill" id="modelPill"><span class="dot dot-loading" id="modelDot"></span><span id="modelStatus">AI model loading…</span></div>
+    <p class="privacy-note">The model lives in this browser tab. <strong>No server ever sees an ingredient or a name.</strong> After the first visit it works fully offline.</p>
+    <div class="model-pill net" id="netPill"><span class="dot dot-ok" id="netDot"></span><span id="netStatus">online</span></div>
+  </section>
+
+  <footer class="side-foot">
+    <p>Built with open weights,<br/>for someone I love. <span aria-hidden="true">🧡</span></p>
+  </footer>
+</aside>
+
+<!-- ── Main scrolling pane ─────────────────────────────────────────── -->
+<main id="main">
+
+  <header class="hero" id="heroSection">
+    <p class="hero-kicker">an allergy-aware meal planner</p>
+    <h1 class="hero-title">Dinner shouldn't be<br/><em>a gamble.</em></h1>
+    <p class="hero-sub" id="heroSub">Every recipe below was scanned ingredient-by-ingredient by an open-source AI running right here — no cloud, no account, nothing leaving the kitchen.</p>
+    <div class="summary-strip" id="summaryStrip" aria-live="polite"></div>
+  </header>
+
+  <nav class="filter-tabs" id="filterTabs" aria-label="Filter recipes"></nav>
+
+  <section id="recipeGrid" class="recipe-grid" aria-live="polite"></section>
+
+  <section class="scanner" aria-labelledby="scanHead">
+    <div class="scanner-head">
+      <h2 id="scanHead">Check <em>anything</em></h2>
+      <p>Paste an ingredient list — a sauce label, a recipe from the internet, a snack bar — and the same on-device AI will flag what could hurt <span class="friend-inline">Maya</span>.</p>
+    </div>
+    <div class="scanner-body">
+      <textarea id="scanInput" rows="4" placeholder="e.g. rice crackers, tamari, sesame oil, dried mango, cashews, natural flavoring…" spellcheck="false"></textarea>
+      <button id="scanBtn" class="btn-primary" type="button">Scan ingredients</button>
+    </div>
+    <div id="scanResults" class="scan-results"></div>
+  </section>
+
+  <section class="planner" aria-labelledby="planHead">
+    <div class="planner-head">
+      <h2 id="planHead">This week's <em>safe plates</em></h2>
+      <p id="planHint">Tap <strong>Add to week</strong> on any safe recipe — or let the week plan itself. Saved on this device only.</p>
+      <button id="planFill" class="btn-add" type="button">✨ Plan my week</button>
+    </div>
+    <div class="week-grid" id="weekGrid"></div>
+  </section>
+
+  <footer class="main-foot">
+    <p><strong>SafePlate</strong> · semantic allergen scanning by <code>all-MiniLM-L6-v2</code>, an open-weight model running in-browser via transformers.js · recipes &amp; swap ideas bundled with the app · <span id="footFriend">Maya</span>'s data never leaves this tab.</p>
+  </footer>
+
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
