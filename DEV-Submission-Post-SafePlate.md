@@ -1,25 +1,28 @@
 <!--
 ═══════════════════════════════════════════════════════════════════
-  SUBMISSION-READY POST — matches the official DEV template exactly.
+  SUBMISSION-READY POST — all correct info filled in and verified.
   HOW TO USE:
+
   1. In the DEV editor (opened via "Submission Template"), select all
      and paste everything BELOW this comment block — it keeps the
      required first line and the auto-added tags.
-  2. BEFORE PUBLISHING, find & replace:
-     [x] 1. Code PUSHED → github.com/karleeov/Maya ✓ (verified via API —
-         all files live, so the {% github %} embed will render)
-     [ ] 2. "Maya" → your real friend's name (Ctrl/Cmd+H, ~10 spots)
-     [ ] 3. Check the allergies (peanut / tree nut / sesame) match theirs
-     [x] Demo link → https://karleeov-dev-hack.kimi.page ✓ (verified live)
-     [x] Deep links → URL-encoded, param names match app.js ✓
-     [x] GitHub repo → karleeov/Maya ✓ (tag resolves once code is pushed)
-     [ ] 4. Upload the 3 screenshots in the editor, swap the image paths
-     [ ] 5. Paste your friend's real reaction in the "What Maya Said" section
-     [ ] 6. If you skip DevRelay, delete "My Agent Session".
-     [x] Prize Categories section removed (kimi.page isn't a partner
-         platform). Re-add only if you deploy on Render — note at the
-         bottom of the post.
-  3. Deadline: Oct 5, 2026, 6:59 AM UTC. Verify under "View Entries".
+  2. Already done for you (verified):
+     [x] Demo link → https://karleeov-dev-hack.kimi.page (opened, works)
+     [x] Deep links → URL-encoded, param names match app.js
+     [x] GitHub repo → karleeov/Maya (code pushed & confirmed live)
+     [x] Prize Categories removed (demo is on kimi.page, not Render —
+         claiming Render without deploying there breaks the rules).
+         Re-add it only if you deploy on Render — see the note at the
+         bottom of this file.
+  3. STILL TO DO BEFORE PUBLISHING (only you can do these):
+     [ ] "Maya" → your real friend's name (Ctrl/Cmd+H, ~10 spots)
+         — skip if her name really is Maya
+     [ ] Check the allergies (peanut / tree nut / sesame) match hers
+     [ ] Upload the 3 screenshots in the DEV editor (drag & drop) and
+         replace the placeholder image paths
+     [ ] Paste her real reaction in "What Maya Said"
+     [ ] Delete "My Agent Session" if you're not using DevRelay
+  4. Deadline: Oct 5, 2026, 6:59 AM UTC. Verify under "View Entries".
 ═══════════════════════════════════════════════════════════════════
 -->
 
@@ -94,14 +97,14 @@ The honest trade-off: a small open model is dumber than a frontier closed one. T
 
 ## My Agent Session
 
-[Optional — delete this section if you're not using it. Save your build session with DevRelay and embed it here with the `agent_session` tag shown on the challenge page, or link to it.]
+[DELETE THIS SECTION if you're not using DevRelay. If you are: save your build session and embed it here with the `agent_session` tag shown on the challenge page, or link to it.]
 
 <!-- Prize Categories: REMOVED — the demo is hosted on kimi.page, not on a
-     partner platform, so no partner category applies. If you later deploy
-     SafePlate on Render (static site), you can re-add this section:
+     partner platform, so no partner prize category applies. Only claim
+     "Best Use of Render" if you genuinely deploy there. If you later host
+     SafePlate on Render as a static site, re-add:
      ## Prize Categories
-     - **Best Use of Render** — SafePlate's front end is hosted on Render.
-     Only claim it if it's genuinely deployed there. -->
+     - **Best Use of Render** — SafePlate's front end is hosted on Render. -->
 
 <!-- Team Submissions: Please pick one member to publish the submission and credit teammates by listing their DEV usernames directly in the body of the post. -->
 
