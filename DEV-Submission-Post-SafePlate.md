@@ -6,11 +6,8 @@
      and paste everything BELOW this comment block — it keeps the
      required first line and the auto-added tags.
   2. BEFORE PUBLISHING, find & replace:
-     [ ] 1. PUSH THE CODE — github.com/karleeov/Maya is still EMPTY.
-         Easiest: github.com/karleeov/Maya/upload/main and drop in the
-         4 files (index.html, app.js, recipes.js, styles.css).
-         Or locally: git add . ; git commit -m "SafePlate" ; git push
-         (needs git user.name/user.email + GitHub login first).
+     [x] 1. Code PUSHED → github.com/karleeov/Maya ✓ (verified via API —
+         all files live, so the {% github %} embed will render)
      [ ] 2. "Maya" → your real friend's name (Ctrl/Cmd+H, ~10 spots)
      [ ] 3. Check the allergies (peanut / tree nut / sesame) match theirs
      [x] Demo link → https://karleeov-dev-hack.kimi.page ✓ (verified live)
